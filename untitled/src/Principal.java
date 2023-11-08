@@ -84,18 +84,31 @@ public class Principal {
                         );
                         return umu;
                     }).limit(generarNumeroAleatorio(1,6))
-                    .toList();
+                    .collect(Collectors.toList());
+                    suce.add(new NumeroCelular("912314675"));
             estET.setCelulares(suce);
             estET.setDireccion(a);
             estuUni.set(i,estET);
         }
+
         //a
         estuUni.stream().filter(e -> e.getNombre().equals("María")).findFirst().ifPresent(val-> System.out.println(val.getDireccion().getCalle()));
         //b
         Direccion d = new Direccion("zipCode1", "calle1", "distrito1", "provincia1");
         estuUni.stream().filter(e -> e.getDireccion().getZipCode().equals(d.getZipCode())).findFirst().ifPresent(val-> System.out.println(val.getNombre()));
         // c
-
+        List<EstudianteUniversitario> asd= estuUni.stream().filter(e-> e.getCelulares().stream().anyMatch(c -> c.getNumero().equals("912314675"))).toList();
+        for (EstudianteUniversitario c: asd
+             ) {
+            System.out.println(c.getNombre());
+        }
+        //d
+        List<EstudianteUniversitario> dosNum= estuUni.stream().filter(e-> e.getCelulares().stream().anyMatch(c -> c.getNumero().equals("912314675") || c.getNumero().equals("946633271"))).toList();
+        for (EstudianteUniversitario c: dosNum
+        ) {
+            System.out.println(c.getNombre());
+        }
+        
     }
 
     public static int generarNumeroAleatorio(int min, int max) {

@@ -6,61 +6,17 @@ import java.util.stream.Stream;
 // then press Enter. You can now see whitespace characters in your code.
 public class Principal {
     public static void main(String[] args) {
-        /*
-        List<EstudianteTemporal> lstET = new ArrayList<>();
-        lstET.add(new EstudianteTemporal("Juan Pérez", 20));
-        lstET.add(new EstudianteTemporal("María Rodríguez", 21));
-        lstET.add( new EstudianteTemporal("Carlos González", 22));
-        lstET.add( new EstudianteTemporal("Ana López", 23));
-        lstET.add( new EstudianteTemporal("Luis Martínez", 24));
-        lstET.add( new EstudianteTemporal("Laura Sánchez", 25));
-        lstET.add( new EstudianteTemporal("Pedro Fernández", 26));
-        lstET.add( new EstudianteTemporal("Sofía Jiménez", 27));
-        lstET.add( new EstudianteTemporal("Diego Torres", 28));
-        lstET.add( new EstudianteTemporal("Elena Ramírez", 29));
-        lstET.add( new EstudianteTemporal("Andrés Vargas", 30));
-        lstET.add( new EstudianteTemporal("Isabel Díaz", 31));
-        lstET.add( new EstudianteTemporal("Javier Herrera", 32));
-        lstET.add( new EstudianteTemporal("Carmen Ortega", 33));
-        lstET.add( new EstudianteTemporal("Roberto Castro", 34));
-        List<String> numbers = Arrays.asList("0","1","2","3","4","5","6","7","8","9");
-
-        for(int i=0;i<lstET.size();i++){
-            Direccion a = new Direccion("zipCode"+i, "calle"+i, "distrito"+i, "provincia"+i);
-
-            EstudianteTemporal estET=lstET.get(i);
-
-            List<NumeroCelular> suce =Stream.generate(() -> {
-                        NumeroCelular umu = new NumeroCelular("9"+ Stream.generate(() -> {
-                                    String cha = numbers.get(generarNumeroAleatorio(0,9));
-                                    return cha;
-                                }).limit(8)
-                                .map(Objects::toString)
-                                .collect(Collectors.joining())
-                        );
-                        return umu;
-                    }).limit(generarNumeroAleatorio(1,6))
-                    .toList();
-            estET.setCelulares(suce);
-
-
-            estET.setDireccion(a);
-            lstET.set(i,estET);
-        }
-
-        Optional<EstudianteTemporal> estu = lstET.stream().filter(e->e.getNombre()=="Henry").
-    */
 
         List<EstudianteUniversitario> estuUni = new ArrayList<>();
         estuUni.add(new EstudianteUniversitario("Juan", "Pérez", "Ingeniería", 20));
         estuUni.add(new EstudianteUniversitario("María", "Gómez", "Medicina", 22));
         estuUni.add(new EstudianteUniversitario("Carlos", "Sánchez", "Derecho", 21));
         estuUni.add(new EstudianteUniversitario("Luisa", "Martínez", "Arquitectura", 23));
-        estuUni.add(new EstudianteUniversitario("Pedro", "Rodríguez", "Ciencias de la Computación", 19));
+        estuUni.add(new EstudianteUniversitario("Rafael", "Rodríguez", "Ciencias de la Computación", 19));
         estuUni.add(new EstudianteUniversitario("Ana", "López", "Psicología", 20));
         estuUni.add(new EstudianteUniversitario("Eduardo", "García", "Administración de Empresas", 22));
         estuUni.add(new EstudianteUniversitario("Laura", "Torres", "Biología", 21));
-        estuUni.add(new EstudianteUniversitario("Andrés", "Fernández", "Economía", 24));
+        estuUni.add(new EstudianteUniversitario("Ruth", "Fernández", "Economía", 24));
         estuUni.add(new EstudianteUniversitario("Sofía", "Hernández", "Historia", 20));
         estuUni.add(new EstudianteUniversitario("Miguel", "Ramírez", "Matemáticas", 22));
         estuUni.add(new EstudianteUniversitario("Isabel", "Díaz", "Física", 21));
@@ -108,7 +64,40 @@ public class Principal {
         ) {
             System.out.println(c.getNombre());
         }
-        
+        //5 **************************************
+        List<EstudianteTemporal> estuTemp = new ArrayList<>();
+        //a
+        for (int i=0;i<estuUni.size();i++){
+            EstudianteTemporal temp = new EstudianteTemporal();
+            temp.setNombre(estuUni.get(i).getNombre());
+            temp.setEdad(estuUni.get(i).getEdad());
+            temp.setDireccion(estuUni.get(i).getDireccion());
+            temp.setCelulares(estuUni.get(i).getCelulares());
+            estuTemp.add(temp);
+        }
+        //b
+        List<String> strTemp = estuTemp.stream().map(r->r.getNombre()).toList();
+        System.out.println(strTemp);
+        //c
+        List<String> representacionesComoCadenas = estuTemp.stream()
+                .map(estudiante -> String.format("EstudianteUniversitario{nombre='%s', edad=%d, direccion=%s, numerosDeTelefono=[%s]}",
+                        estudiante.getNombre(), estudiante.getEdad(),estudiante.getDireccion().getProvincia() ,estudiante.getCelulares().stream()
+                                .map(celular -> celular.getNumero())
+                                .collect(Collectors.joining(", "))))
+                .collect(Collectors.toList());
+
+        representacionesComoCadenas.forEach(System.out::println);
+        //d
+        List<String> strTempMay = strTemp.stream().map(s->s.toUpperCase()).toList();
+        System.out.println(strTempMay);
+        //e
+        List<String> orden = strTempMay.stream().sorted((o1, o2) -> o1.compareTo(o2)).toList();
+        System.out.println(orden);
+        //f
+        List<String> rOrden = orden.stream().filter(s -> s.startsWith("R")).sorted((o1, o2) -> o1.compareTo(o2)).toList();
+        System.out.println(rOrden);
+
+
     }
 
     public static int generarNumeroAleatorio(int min, int max) {

@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 // then press Enter. You can now see whitespace characters in your code.
 public class Principal {
     public static void main(String[] args) {
+        /*
         List<EstudianteTemporal> lstET = new ArrayList<>();
         lstET.add(new EstudianteTemporal("Juan Pérez", 20));
         lstET.add(new EstudianteTemporal("María Rodríguez", 21));
@@ -27,11 +28,9 @@ public class Principal {
         for(int i=0;i<lstET.size();i++){
             Direccion a = new Direccion("zipCode"+i, "calle"+i, "distrito"+i, "provincia"+i);
 
-
-
             EstudianteTemporal estET=lstET.get(i);
 
-            estET.setCelulares( Stream.generate(() -> {
+            List<NumeroCelular> suce =Stream.generate(() -> {
                         NumeroCelular umu = new NumeroCelular("9"+ Stream.generate(() -> {
                                     String cha = numbers.get(generarNumeroAleatorio(0,9));
                                     return cha;
@@ -40,14 +39,62 @@ public class Principal {
                                 .collect(Collectors.joining())
                         );
                         return umu;
-                    }).limit(generarNumeroAleatorio(1,10))
-                    .toList()
-            );
+                    }).limit(generarNumeroAleatorio(1,6))
+                    .toList();
+            estET.setCelulares(suce);
+
+
             estET.setDireccion(a);
-            lstET.add(i,estET);
+            lstET.set(i,estET);
         }
 
+        Optional<EstudianteTemporal> estu = lstET.stream().filter(e->e.getNombre()=="Henry").
+    */
 
+        List<EstudianteUniversitario> estuUni = new ArrayList<>();
+        estuUni.add(new EstudianteUniversitario("Juan", "Pérez", "Ingeniería", 20));
+        estuUni.add(new EstudianteUniversitario("María", "Gómez", "Medicina", 22));
+        estuUni.add(new EstudianteUniversitario("Carlos", "Sánchez", "Derecho", 21));
+        estuUni.add(new EstudianteUniversitario("Luisa", "Martínez", "Arquitectura", 23));
+        estuUni.add(new EstudianteUniversitario("Pedro", "Rodríguez", "Ciencias de la Computación", 19));
+        estuUni.add(new EstudianteUniversitario("Ana", "López", "Psicología", 20));
+        estuUni.add(new EstudianteUniversitario("Eduardo", "García", "Administración de Empresas", 22));
+        estuUni.add(new EstudianteUniversitario("Laura", "Torres", "Biología", 21));
+        estuUni.add(new EstudianteUniversitario("Andrés", "Fernández", "Economía", 24));
+        estuUni.add(new EstudianteUniversitario("Sofía", "Hernández", "Historia", 20));
+        estuUni.add(new EstudianteUniversitario("Miguel", "Ramírez", "Matemáticas", 22));
+        estuUni.add(new EstudianteUniversitario("Isabel", "Díaz", "Física", 21));
+        estuUni.add(new EstudianteUniversitario("Roberto", "Pérez", "Química", 23));
+        estuUni.add(new EstudianteUniversitario("Silvia", "González", "Música", 20));
+        estuUni.add(new EstudianteUniversitario("Javier", "Soto", "Idiomas", 22));
+        List<String> numbers = Arrays.asList("0","1","2","3","4","5","6","7","8","9");
+
+        for(int i=0;i<estuUni.size();i++){
+            Direccion a = new Direccion("zipCode"+i, "calle"+i, "distrito"+i, "provincia"+i);
+
+            EstudianteUniversitario estET=estuUni.get(i);
+
+            List<NumeroCelular> suce =Stream.generate(() -> {
+                        NumeroCelular umu = new NumeroCelular("9"+ Stream.generate(() -> {
+                                    String cha = numbers.get(generarNumeroAleatorio(0,9));
+                                    return cha;
+                                }).limit(8)
+                                .map(Objects::toString)
+                                .collect(Collectors.joining())
+                        );
+                        return umu;
+                    }).limit(generarNumeroAleatorio(1,6))
+                    .toList();
+            estET.setCelulares(suce);
+            estET.setDireccion(a);
+            estuUni.set(i,estET);
+        }
+        //a
+        estuUni.stream().filter(e -> e.getNombre().equals("María")).findFirst().ifPresent(val-> System.out.println(val.getDireccion().getCalle()));
+        //b
+        Direccion d = new Direccion("zipCode1", "calle1", "distrito1", "provincia1");
+        estuUni.stream().filter(e -> e.getDireccion().getZipCode().equals(d.getZipCode())).findFirst().ifPresent(val-> System.out.println(val.getNombre()));
+        // c
 
     }
 

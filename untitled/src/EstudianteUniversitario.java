@@ -15,6 +15,16 @@ public class EstudianteUniversitario {
         this.direccion = direccion;
         this.edad = edad;
     }
+    public EstudianteUniversitario(String nombre, String apellidos, String carrera, int edad) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.carrera = carrera;
+        this.edad = edad;
+    }
+
+    public EstudianteUniversitario() {
+
+    }
 
     public String getNombre() {
         return nombre;
